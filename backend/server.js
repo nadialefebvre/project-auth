@@ -36,7 +36,7 @@ const User = mongoose.model("User", UserSchema)
 app.get("/", (req, res) => {
   res.send(
     {
-      "Welcome!": "Authentication app by Nadia",
+      "Welcome!": "Random Auth App",
       "All endpoints are listed here": "/endpoints",
       "Frontend": "https://random-auth.netlify.app"
     }
