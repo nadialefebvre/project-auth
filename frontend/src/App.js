@@ -2,9 +2,9 @@ import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Provider } from "react-redux"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import CssBaseline from '@mui/material/CssBaseline'
-import Grid from '@mui/material/Grid'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import CssBaseline from "@mui/material/CssBaseline"
+import Grid from "@mui/material/Grid"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 
 import loading from "reducers/loading"
 import user from "./reducers/user"
@@ -36,7 +36,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Grid container component="main" sx={{ height: '100vh' }}>
+        <Grid container component="main" sx={{ height: "100vh" }}>
           <CssBaseline />
           <Grid
             item
@@ -44,12 +44,12 @@ const App = () => {
             sm={4}
             md={7}
             sx={{
-              backgroundImage: 'url(https://source.unsplash.com/random)',
-              backgroundRepeat: 'no-repeat',
+              backgroundImage: "url(https://source.unsplash.com/random)",
+              backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
-                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+                t.palette.mode === "light" ? t.palette.grey[50] : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           />
           <BrowserRouter>

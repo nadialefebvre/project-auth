@@ -18,12 +18,12 @@ app.use(express.json())
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, "Username is required."],
-    unique: [true, "This username is already used."]
+    required: true,
+    unique: true
   },
   password: {
     type: String,
-    required: [true, "Password is required."],
+    required: true,
   },
   accessToken: {
     type: String,
@@ -33,50 +33,24 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema)
 
-const authenticateUser = async (req, res, next) => {
-  const accessToken = req.header("Authorization")
-  try {
-    const user = await User.findOne({ accessToken: accessToken })
-    if (user) {
-      next()
-    } else {
-      res.status(401).json({
-        success: false,
-        status_code: 401,
-        response: {
-          message: "Please log in / You are logged out"
-        }
-      })
-    }
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      status_code: 400,
-      response: {
-        errors: error
-      }
-    })
-  }
-}
-
 app.get("/", (req, res) => {
+  res.send(
+    {
+      "Welcome!": "Authentication app by Nadia",
+      "All endpoints are listed here": "/endpoints",
+      "Frontend": "https://URLURLURL.netlify.app/"
+    }
+  )
+})
+
+app.get("/endpoints", (req, res) => {
   res.send(allEndpoints(app))
 })
 
-//--------------------------- AUTHENTICATED ENDPOINT ---------------------------//
-app.get("/loggedin", authenticateUser)
-app.get("/loggedin", (req, res) => {
-  res.status(200).json({
-    success: true,
-    status_code: 200,
-    response: "You are logged in!"
-  })
-})
-
-//--------------------------- ALL USERS ENDPOINT ---------------------------//
 app.get("/users", async (req, res) => {
   try {
     const allUsers = await User.find()
+    
     res.status(200).json({
       success: true,
       status_code: 200,
@@ -87,7 +61,8 @@ app.get("/users", async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: "Bad request."
+        message: "Bad request.",
+        errors: error
       }
     })
   }
@@ -99,12 +74,22 @@ app.post("/register", async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync()
 
-    if (password.length < 8) {
+    const userExists = await User.findOne({ username })
+
+    if (userExists) {
       res.status(400).json({
         success: false,
         status_code: 400,
         response: {
-          message: "Password must be at least 8 characters long"
+          message: "Please choose another username."
+        }
+      })
+    } else if (password.length < 8) {
+      res.status(400).json({
+        success: false,
+        status_code: 400,
+        response: {
+          message: "Password must be at least 8 characters long."
         }
       })
     } else {
@@ -112,6 +97,7 @@ app.post("/register", async (req, res) => {
         username: username,
         password: bcrypt.hashSync(password, salt)
       }).save()
+
       res.status(201).json({
         success: true,
         status_code: 201,
@@ -127,7 +113,7 @@ app.post("/register", async (req, res) => {
       success: false,
       status_code: 400,
       response: {
-        message: "Could not create user",
+        message: "Could not create user.",
         errors: error.errors
       }
     })
@@ -156,7 +142,7 @@ app.post("/login", async (req, res) => {
         success: false,
         status_code: 400,
         response: {
-          message: "Username and password don't match"
+          message: "Username and password don't match."
         },
       })
     }
@@ -165,25 +151,50 @@ app.post("/login", async (req, res) => {
       success: false,
       status_code: 400,
       response: {
+        message: "Bad request.",
         errors: error
       }
     })
   }
 })
 
-app.get("/users", async (req, res) => {
+//--------------------------- AUTHENTICATED ENDPOINT ---------------------------//
+const authenticateUser = async (req, res, next) => {
+  const accessToken = req.header("Authorization")
+
   try {
-    const allUsers = await User.find()
-    res.status(200).json(allUsers)
+    const user = await User.findOne({ accessToken: accessToken })
+
+    if (user) {
+      next()
+    } else {
+      res.status(401).json({
+        success: false,
+        status_code: 401,
+        response: {
+          message: "Please log in / You are logged out"
+        }
+      })
+    }
   } catch (error) {
     res.status(400).json({
       success: false,
       status_code: 400,
       response: {
-        message: "Bad request."
+        message: "Bad request.",
+        errors: error
       }
     })
   }
+}
+
+app.get("/loggedin", authenticateUser)
+app.get("/loggedin", (req, res) => {
+  res.status(200).json({
+    success: true,
+    status_code: 200,
+    response: "You are logged in!"
+  })
 })
 
 // Start the server
