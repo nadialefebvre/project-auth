@@ -1,13 +1,11 @@
 # Week 20: Project Auth API
 
-Replace this readme with your own information about your project.
-
-Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
+This week's project was to build an API with authentication to implement a registration flow, and a frontend with register/login form and a page with some content visible only for an authenticated user.
 
 ## The problem
 
-Describe how you approached to problem, and what tools and techniques you used to solve it. How did you plan? What technologies did you use? If you had more time, what would be next?
+Project was quite simple. I used crypto and bcrypt for encryption of passwords. I used MateriaUI for styling, and I will try to become more comfortable in another project with this component library because it seems very interesting. I had some issues with the format of my response, but with a little help and some googling, I solved them.
 
 ## View it live
 
-Project deployed here: [Title](url)
+Random Auth App: [backend](https://random-auth.herokuapp.com/) / [frontend](https://random-auth.netlify.app/)
