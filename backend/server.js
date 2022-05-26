@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
     {
       "Welcome!": "Authentication app by Nadia",
       "All endpoints are listed here": "/endpoints",
-      "Frontend": "https://URLURLURL.netlify.app/"
+      "Frontend": "https://random-auth.netlify.app"
     }
   )
 })
