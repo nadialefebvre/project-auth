@@ -1,10 +1,3 @@
-# Weekly project for Technigo's bootcamp, week 20
-Task: build a fullstack website including API and authentication frontend
-
-Tech: HTML, CSS, JavaScript, React, MateriaUI, Node.js, Express, MongoDB, Redux
-
-----
-
 # Week 20: Project Auth API
 
 This week's project was to build an API with authentication to implement a registration flow, and a frontend with register/login form and a page with some content visible only for an authenticated user.
