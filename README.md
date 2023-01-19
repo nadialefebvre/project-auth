@@ -11,3 +11,7 @@ Project was quite simple. I used crypto and bcrypt for encryption of passwords. 
 ## View it live
 
 Random Auth App: [backend](https://random-auth-kijk33idxa-lz.a.run.app/) / [frontend](https://random-auth.netlify.app/)
+
+<div align="center">
+  <img src="screenshot.jpg" />
+</div>
